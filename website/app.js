@@ -1,8 +1,8 @@
 /* Global Variables */
 // Personal API Key for OpenWeatherMap API
 let baseURL = "https://api.openweathermap.org/data/2.5/weather?zip=";
-const apiKey = 'b232b7f7efcec6ee8af188f7c9de327b&units=imperial';
-
+const apiKey = '&apikey=b232b7f7efcec6ee8af188f7c9de327b';
+const units = "&units=imperial"
 // Create a new date instance dynamically with JS
 let d = new Date();
 let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
@@ -14,10 +14,11 @@ document.getElementById("generate").addEventListener("click", generate);
 function generate(e) {
     const newZip = document.getElementById("zip").value;
     const feelings = document.getElementById("feelings").value;
+    let projectData = {};
     
-    getZip(baseURL, newZip, apiKey).then(function (data) {
+    getZip(baseURL, newZip, units, apiKey, projectData).then(function (data) {
         postData("/add", {
-            temperature: data.main.temperature,
+            temperature: data.main.temp,
             date: newDate,
             content: feelings,
         }).then(function () {
@@ -27,8 +28,8 @@ function generate(e) {
 }
 
 /* Function to GET Web API Data */
-const getZip = async (baseURL, newZip, apiKey) => {
-    const request = await fetch(baseURL + newZip + apiKey);
+const getZip = async (baseURL, newZip, units, apiKey) => {
+    const request = await fetch(baseURL + newZip + units + apiKey);
     try {
         const allData = await request.json();
         return allData;
@@ -48,7 +49,7 @@ getData().then(data => console.loge(data));
 
 /* Function to POST data */
 const postData = async ( url = '', data = {})=>{
-    console.log(projectData)
+    console.log(data)
         const response  = await fetch(url, {
             method: 'POST',
             credentials: 'same-origin',
