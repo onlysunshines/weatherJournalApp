@@ -75,7 +75,7 @@ const updateUI = async () => {
         document.getElementById("date").innerHTML = allData.date;
         document.getElementById("temp").innerHTML = 
             Math.round(allData.temperature) + "degrees";
-        document.getElementsById("content").innerHTML = allData.content;
+        document.getElementsById("content").innerHTML = allData.feelings;
     } catch (error) {
         console.log("error", error);
     }
